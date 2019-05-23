@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
+#include "Config.h"
 
 //////////////////////////////////////////////////////////////////////////
 class CMQTTClientDlg;
@@ -70,13 +71,23 @@ protected:
 	afx_msg void OnBnClickedButtonSubscribe();
 	afx_msg void OnBnClickedButtonPublish();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnContentmenuUnsubscribe();
-	afx_msg void OnContentmenuCleancontent();
+	afx_msg void OnContextmenuUnsubscribe();
+	afx_msg void OnContextmenuCleancontent();
+    afx_msg void OnDropFiles(HDROP hDropInfo);
+    afx_msg void OnMainmenuOpen();
+    afx_msg void OnMainmenuSave();
+    afx_msg void OnMainmenuSaveas();
+    afx_msg void OnMainmenuAbout();
 	DECLARE_MESSAGE_MAP()
 
 public:
 	void SetConnectionState(BOOL connection);
 	void SetMessage(CString msg, DWORD color);
+    bool GetConfig(SConfig& config);
+    bool SetConfig(const SConfig& config);
+    void SetTitle(LPCTSTR fileName);
+    bool LoadConfigFile(LPCTSTR fileName);
+    bool SaveConfigFile(bool saveas);
 
 public:
 	CEdit                  m_edtHost;
@@ -105,4 +116,6 @@ public:
 
 	mqtt::async_client_ptr m_pMqtt;
 	CMQTTCallback          m_cbMqtt;
+
+    CString                m_strCfgFile;
 };
